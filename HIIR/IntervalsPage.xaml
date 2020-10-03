@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:progressring="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+             mc:Ignorable="d"
+             xmlns:timepicker="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
+x:Name="page" BackgroundColor="Black"
+             x:Class="HIIR.IntervalsPage">
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,0.5" AbsoluteLayout.LayoutFlags="All">
+            <Label Text="Set running mode duration &#10;" HorizontalTextAlignment="Center" FontSize="30" TextColor="White"/>
+
+            <timepicker:SfTimePicker x:Name="timePicker"
+                                     PickerWidth="300"                                 
+                                     IsOpen="True"
+                                     UnselectedItemTextColor="Gray"
+                                     ColumnHeaderBackgroundColor="Transparent"
+                                     ColumnHeaderTextColor="White"
+                                     SelectedItemTextColor="White"
+                                     HourHeaderText="Hours"
+                                     IsVisible="{Binding IsVisible}"
+                                     ShowHeader="False"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="Transparent"
+                                     Time="{Binding Time}">
+            </timepicker:SfTimePicker>
+        </StackLayout>
+
+
+
+        <progressring:ProgressRing x:Name="progressbar" RingThickness="10" ProgressColor="Orange" RingBaseColor="DarkGray"  AnimationLength="1000" AnimatedProgress="{Binding ProgressPracentage, Mode=TwoWay}"  IsVisible="False" AbsoluteLayout.LayoutBounds="0,0.2,1,0.45" AbsoluteLayout.LayoutFlags="All"/>
+
+        <Label HorizontalTextAlignment="Center" TextColor="White" Text="{Binding CountdownTimer, StringFormat=\{0:hh\\:mm\\:ss\\\}}" FontSize="30" IsVisible="False" x:Name="progressTime" AbsoluteLayout.LayoutBounds="0,0.6,1,0.5" AbsoluteLayout.LayoutFlags="All"/>
+        
+
+
+        <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.7,0.7,1, 80" AbsoluteLayout.LayoutFlags="WidthProportional,PositionProportional">
+            <Button   BorderRadius="40" HeightRequest="80" WidthRequest="80"  HorizontalOptions="StartAndExpand" Text="Cancel" x:Name="leftButton"  BackgroundColor="#343435"  TextColor="White"/>
+            <Button   Clicked="rightButton_Clicked" BorderRadius="40" HeightRequest="80" WidthRequest="80" HorizontalOptions="End" Text="{Binding ButtomModeText}" x:Name="rightButton" TextColor="{Binding ButtomModeColor}"  BackgroundColor="#343435"  Command="{Binding RightButtonClickedCommand}"/>
+
+        </StackLayout>
+    </AbsoluteLayout>
+    
+
+</ContentPage>

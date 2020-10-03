@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms"
+             xmlns:local="clr-namespace:HIIR;assembly=HIIR"
+             xmlns:material="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
+
+             x:Class="HIIR.test">
+    <ContentPage.Content>
+        <StackLayout >
+            <Grid BackgroundColor="Black">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--<material:MaterialDoublePicker x:Name="runningTimerPicker"  Type="Filled" LabelText="Double Picker" Separator=" - " 
+                               ItemsSource="{Binding Source=Minutes,Path=Value}" SecondaryItemsSource="{Binding Source=Seconds, Path=Value}"/>-->
+
+                <StackLayout Grid.Column="3"  Grid.Row="0">
+                    <Label Text="Loop" HorizontalTextAlignment="Center"/>
+                    <Switch IsToggled="True" OnColor="Green" HorizontalOptions="Center" />
+                </StackLayout>
+            </Grid>
+            <TimePicker BackgroundColor="Gray"/>
+            <Picker BackgroundColor="Blue"/>    
+            <DatePicker BackgroundColor="Blue"/>
+            <local:TimerPickerWheel x:Name="timerWheelPicker" TextSize="100"/>
+        </StackLayout> 
+    </ContentPage.Content>
+</ContentPage>
