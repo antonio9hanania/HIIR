@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
+
 using System.Xml.Schema;
 using Xamarin.Forms;
 
@@ -16,6 +18,52 @@ namespace HIIR.ViewModel
     public class IntervalsPageViewModel : BaseViewModel
     {
         private CountDownTimer _timer;
+
+        private WheeltimePickerModel _oldViewModel;
+        private bool isEditCklicked = false;
+
+        public ObservableCollection<WheeltimePickerModel> TimerPickersViewModel { get; set; }
+            = new ObservableCollection<WheeltimePickerModel>();
+
+
+        private ExercizeMode _userExercizeMode = ExercizeMode.Walking;
+        public ExercizeMode UserExercizeMode 
+        {
+            get { return _userExercizeMode; }
+            set
+            {
+                if (_userExercizeMode == value)
+                    return;
+                _userExercizeMode = value;
+                OnPropertyChanged();
+            } 
+        }
+
+        private int _currentTimerSelectorIndex = 0;
+        public int CurrentTimerSelectorIndex
+        {
+            get { return _currentTimerSelectorIndex; }
+            set
+            {
+                if (_currentTimerSelectorIndex == value)
+                    return;
+
+                _currentTimerSelectorIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _roundCounter = 0;
+        public int RoundsCounter {
+            get { return _roundCounter; }
+            set
+            {
+                if (value == _roundCounter)
+                    return;
+                _roundCounter = value;
+                OnPropertyChanged();
+            }
+        }
 
         public enum RightButtomModes
         {
@@ -31,6 +79,12 @@ namespace HIIR.ViewModel
             Color.DarkGreen
         };
 
+        public enum ExercizeMode
+        {
+            Walking = 0,
+            Running,
+        }
+
 
         private TimeSpan _time;
         public TimeSpan Time
@@ -42,16 +96,16 @@ namespace HIIR.ViewModel
             }
         }
 
-        private bool _isVisible = true;
-        public bool IsVisible
+        private bool _isActivated = false;
+        public bool IsActivated
         {
-            get { return _isVisible; }
+            get { return _isActivated; }
             set
             {
-                if (_isVisible == value)
+                if (_isActivated == value)
 
                     return;
-                _isVisible = value;
+                _isActivated = value;
                 OnPropertyChanged();
             }
         }
@@ -116,24 +170,61 @@ namespace HIIR.ViewModel
 
 
         public ICommand RightButtonClickedCommand { get; private set; }
+        public ICommand EditButtonClickedCommand { get; private set; }
         public ICommand StartTimerCommand { get; private set; }
         public ICommand PauseTimerCommand { get; private set; }
         public ICommand CancelTimerCommand { get; private set; }
+        public ICommand LeftButtonClickedCommand { get; private set; }
 
 
 
         public IntervalsPageViewModel()
         {
+
+
+            TimerPickersViewModel.Add(new WheeltimePickerModel
+            {
+                Name = "Walking Duration",
+                IsVisible = true,
+                InEdit = true,
+                Time = new TimeSpan(0, 1, 0)
+            });
+
+            TimerPickersViewModel.Add(new WheeltimePickerModel
+            {
+                Name = "Running Duration",
+                IsVisible = false,
+                InEdit = false,
+                Time = new TimeSpan(0, 1, 0)
+            });
+
+
+            _oldViewModel = TimerPickersViewModel[0];
             RightButtonClickedCommand = new Command(() => OnRightButtonClicked());
+            EditButtonClickedCommand = new Command(() => OnEditButtonClicked());
+            LeftButtonClickedCommand = new Command(() => OnLeftButtonClicked());
             StartTimerCommand = new Command(() => StartTimer());
             PauseTimerCommand = new Command(() => PauseTimer());
             CancelTimerCommand = new Command(() => CancelTimer());
+            
+        }
+
+        private void OnEditButtonClicked()
+        {
+            _timer.Pause();
+            RightButtonMode = RightButtomModes.Resume;
+            isEditCklicked = true;
+
+            IsActivated = false;
         }
 
         private void StartTimer()
         {
+            IsActivated = true;
+            
             ProgressPracentage = 1;
-            CountdownTimer = Time;
+            CountdownTimer = TimerPickersViewModel[(int)UserExercizeMode].Time;
+            Time = CountdownTimer;
             _timer = new CountDownTimer(Time);
             _timer.Completed += OnCountdownTimerCompleted;
             _timer.Ticked += OnCountdownTimerTicked;
@@ -145,11 +236,35 @@ namespace HIIR.ViewModel
 
         private void PauseTimer()
         {
+            //IsActivated = false;
+
+
             _timer.Pause();
         }
+
         private void ResumeTimer()
         {
-            _timer.Resume();
+
+            if (isEditCklicked)
+            {
+                ProgressPracentage = 1;
+
+                isEditCklicked = false;
+                Time = TimerPickersViewModel[(int)UserExercizeMode].Time;
+                CountdownTimer = Time;
+
+                _timer.InitWith(Time);
+                IsActivated = true;
+
+                _timer.Start();
+            }
+            else
+            {
+                IsActivated = true;
+
+                _timer.Resume();
+            }
+
         }
 
         private void CancelTimer()
@@ -177,6 +292,14 @@ namespace HIIR.ViewModel
             }
         }
 
+        private void OnLeftButtonClicked()
+        {
+            RightButtonMode = RightButtomModes.Start;
+            UserExercizeMode = ExercizeMode.Walking; // resetting
+            RoundsCounter = 0;
+            IsActivated = false;
+        }
+
         private void OnCountdownTimerCompleted()
         {
             ProgressPracentage = 0;
@@ -184,20 +307,84 @@ namespace HIIR.ViewModel
             CountdownTimer = TimeSpan.Zero;
 
 
+
+            UserExercizeMode = Extensions.Next<ExercizeMode>(UserExercizeMode);
+
+            ProgressPracentage = 1;
+
+            Time = TimerPickersViewModel[(int)UserExercizeMode].Time;
+            CountdownTimer = Time;
+
+            //playsome sounde according the new ExercizeMode;
+
+            _timer.InitWith(Time);
+            if (UserExercizeMode == ExercizeMode.Walking)
+                RoundsCounter++;
+
+            _timer.Start();
+
+            //start the timer with the current mode 
+
+
             //alert
         }
-
         private void OnCountdownTimerTicked()
         {
             ProgressPracentage = (float)(_timer.TimeLeft.TotalSeconds / _timer.RequestedTime.TotalSeconds);
 
             CountdownTimer = _timer.TimeLeft;
+            if(CountdownTimer  == TimeSpan.FromSeconds(3))
+            {
+                // play 3, 2, 1 beep;
+                Console.WriteLine("3, 2, 1 occured");
+            }
 
+            //looking for speed and play some cheer sound if UserExercizeMode == Running;
         }
 
         private void OnCountdownTimerPaused()
         {
 
+        }
+
+        public void SetTime(TimeSpan Time)
+        {
+            TimerPickersViewModel[(int)UserExercizeMode].Time = Time;
+        }
+
+
+        public void ShowOrHideListModels(WheeltimePickerModel viewModel)
+        {
+            if (_oldViewModel == viewModel)
+            {
+                // click twice on the same item will hide it
+                viewModel.IsVisible = !viewModel.IsVisible;
+                viewModel.InEdit = !viewModel.InEdit;
+                UpdateViews(viewModel);
+            }
+            else
+            {
+                if (_oldViewModel != null)
+                {
+                    // hide previous selected item
+                    _oldViewModel.IsVisible = false;
+                    _oldViewModel.InEdit = false;
+                    UpdateViews(_oldViewModel);
+                }
+                // show selected item
+                viewModel.IsVisible = true;
+                viewModel.InEdit = true;
+                UpdateViews(viewModel);
+            }
+
+            _oldViewModel = viewModel;
+        }
+
+        private void UpdateViews(WheeltimePickerModel view)
+        {
+            var index = TimerPickersViewModel.IndexOf(view);
+            TimerPickersViewModel.Remove(view);
+            TimerPickersViewModel.Insert(index, view);
         }
 
     }

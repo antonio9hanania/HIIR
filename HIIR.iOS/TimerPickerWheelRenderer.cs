@@ -22,6 +22,8 @@ namespace HIIR.iOS
             base.OnElementPropertyChanged(sender, e);
             Control.Layer.BorderWidth = 0;
             Control.BorderStyle = UITextBorderStyle.None;
+
+            // need to create a UIDatePickerMode.CountDownTimer just for minutes and seconds and implement the props textsize and SelectedTimeValue
         }
 
     }

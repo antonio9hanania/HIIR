@@ -4,38 +4,125 @@
              xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms"
              xmlns:local="clr-namespace:HIIR;assembly=HIIR"
              xmlns:material="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
+             x:Class="HIIR.test" BackgroundColor="Black">
 
-             x:Class="HIIR.test">
-    <ContentPage.Content>
+
+    <StackLayout>
+
+        <!--<ListView 
+              HasUnevenRows="True"
+              x:Name="timePickersListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout >
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding .Name}"
+                               TextColor="Navy" 
+                               FontSize="30"  HorizontalTextAlignment="Start" HorizontalOptions="StartAndExpand"/>
+                                
+                                <Label HorizontalOptions="End" Text="Expand" HorizontalTextAlignment="Start" />
+                            </StackLayout>
+
+
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
         <StackLayout >
-            <Grid BackgroundColor="Black">
+            <Frame Padding="0,0,4,4" Margin="5,5,5,0"  CornerRadius="2">
+                <Frame.BackgroundColor>
+                    <Color x:FactoryMethod="FromRgba">
+                        <x:Arguments>
+                            <x:Double>1</x:Double>
+                            <x:Double>1</x:Double>
+                            <x:Double>1</x:Double>
+                            <x:Double>0.5</x:Double>
+                        </x:Arguments>
+                    </Color>
+                </Frame.BackgroundColor>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <Frame 
+       HasShadow="True"
+       BorderColor="Black" >
+                    <Frame.Background>
+                        <RadialGradientBrush Center="0.1,0.1"
+                             Radius="0.5">
+                            <GradientStop Color="Black"
+                          Offset="0.1"/>
+                            <GradientStop Color="DimGray"
+                          Offset="1.0"/>
+                        </RadialGradientBrush>
+                    </Frame.Background>
+                    <StackLayout  Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <Label Text="Walking Duration"
+                               TextColor="White" 
+                               FontSize="25"  HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                        <Image Source="ic_action_expand.png" Aspect="AspectFit" />
+                    </StackLayout>
+                </Frame>
+            </Frame>
+        </StackLayout>
 
-                <!--<material:MaterialDoublePicker x:Name="runningTimerPicker"  Type="Filled" LabelText="Double Picker" Separator=" - " 
-                               ItemsSource="{Binding Source=Minutes,Path=Value}" SecondaryItemsSource="{Binding Source=Seconds, Path=Value}"/>-->
+        <StackLayout >
+            <Frame Padding="0.1,0.1,4,4" Margin="5,5,5,0" BorderColor="WhiteSmoke" CornerRadius="10">
+                <Frame.BackgroundColor>
+                    <Color x:FactoryMethod="FromRgba">
+                        <x:Arguments>
+                            <x:Double>1</x:Double>
+                            <x:Double>1</x:Double>
+                            <x:Double>1</x:Double>
+                            <x:Double>0.5</x:Double>
+                        </x:Arguments>
+                    </Color>
+                </Frame.BackgroundColor>
 
-                <StackLayout Grid.Column="3"  Grid.Row="0">
-                    <Label Text="Loop" HorizontalTextAlignment="Center"/>
-                    <Switch IsToggled="True" OnColor="Green" HorizontalOptions="Center" />
-                </StackLayout>
-            </Grid>
-            <TimePicker BackgroundColor="Gray"/>
-            <Picker BackgroundColor="Blue"/>    
-            <DatePicker BackgroundColor="Blue"/>
-            <local:TimerPickerWheel x:Name="timerWheelPicker" TextSize="100"/>
-        </StackLayout> 
-    </ContentPage.Content>
+                <Frame 
+       HasShadow="True"
+       BorderColor="Black" >
+                    <Frame.Background>
+                        <RadialGradientBrush Center="0.1,0.1"
+                             Radius="0.5">
+                            <GradientStop Color="Black"
+                          Offset="0.1"/>
+                            <GradientStop Color="DimGray"
+                          Offset="1.0"/>
+                        </RadialGradientBrush>
+                    </Frame.Background>
+                    <StackLayout  Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <Label Text="Walking Duration"
+                               TextColor="White" 
+                               FontSize="25"  HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                        <Image Source="ic_action_expand.png" Aspect="AspectFit" />
+                    </StackLayout>
+                </Frame>
+            </Frame>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Walking Duration"
+                               TextColor="White" 
+                               FontSize="25"  HorizontalTextAlignment="Start" HorizontalOptions="StartAndExpand"/>
+
+            <Image Source="ic_action_collapse.png" Aspect="Fill" />
+
+            <!--<Label HorizontalOptions="End" Text="Expand"  />-->
+        </StackLayout>
+    </StackLayout>
+
+    <!--<StackLayout >
+        <ListView ItemsSource="{Binding Views}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Name}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>-->
+
+<!--<StackLayout>
+        <local:TimerPickerWheel TextSize="40" ShowDivider="False"   AllTextColor="White"/>
+    </StackLayout>-->
 </ContentPage>

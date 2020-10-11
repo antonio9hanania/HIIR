@@ -15112,74 +15112,92 @@ namespace HIIR.Droid
 			// aapt resource value: 0x7F080080
 			public const int design_snackbar_background = 2131230848;
 			
-			// aapt resource value: 0x7F080081
-			public const int ic_mtrl_chip_checked_black = 2131230849;
-			
-			// aapt resource value: 0x7F080082
-			public const int ic_mtrl_chip_checked_circle = 2131230850;
-			
-			// aapt resource value: 0x7F080083
-			public const int ic_mtrl_chip_close_circle = 2131230851;
-			
-			// aapt resource value: 0x7F080085
-			public const int inputlayout_togglecollapseicon = 2131230853;
-			
 			// aapt resource value: 0x7F080086
-			public const int inputlayout_togglevisibleicon = 2131230854;
-			
-			// aapt resource value: 0x7F080084
-			public const int input_layout_drop_down_icon = 2131230852;
+			public const int ico_running_interval = 2131230854;
 			
 			// aapt resource value: 0x7F080087
-			public const int mtrl_snackbar_background = 2131230855;
+			public const int ico_running_interval_white = 2131230855;
 			
 			// aapt resource value: 0x7F080088
-			public const int mtrl_tabs_default_indicator = 2131230856;
+			public const int ico_walking_interval = 2131230856;
 			
 			// aapt resource value: 0x7F080089
-			public const int navigation_empty_icon = 2131230857;
+			public const int ico_walking_interval_white = 2131230857;
 			
-			// aapt resource value: 0x7F08008A
-			public const int notification_action_background = 2131230858;
+			// aapt resource value: 0x7F080081
+			public const int ic_action_collapse = 2131230849;
+			
+			// aapt resource value: 0x7F080082
+			public const int ic_action_expand = 2131230850;
+			
+			// aapt resource value: 0x7F080083
+			public const int ic_mtrl_chip_checked_black = 2131230851;
+			
+			// aapt resource value: 0x7F080084
+			public const int ic_mtrl_chip_checked_circle = 2131230852;
+			
+			// aapt resource value: 0x7F080085
+			public const int ic_mtrl_chip_close_circle = 2131230853;
 			
 			// aapt resource value: 0x7F08008B
-			public const int notification_bg = 2131230859;
+			public const int inputlayout_togglecollapseicon = 2131230859;
 			
 			// aapt resource value: 0x7F08008C
-			public const int notification_bg_low = 2131230860;
+			public const int inputlayout_togglevisibleicon = 2131230860;
+			
+			// aapt resource value: 0x7F08008A
+			public const int input_layout_drop_down_icon = 2131230858;
 			
 			// aapt resource value: 0x7F08008D
-			public const int notification_bg_low_normal = 2131230861;
+			public const int mtrl_snackbar_background = 2131230861;
 			
 			// aapt resource value: 0x7F08008E
-			public const int notification_bg_low_pressed = 2131230862;
+			public const int mtrl_tabs_default_indicator = 2131230862;
 			
 			// aapt resource value: 0x7F08008F
-			public const int notification_bg_normal = 2131230863;
+			public const int navigation_empty_icon = 2131230863;
 			
 			// aapt resource value: 0x7F080090
-			public const int notification_bg_normal_pressed = 2131230864;
+			public const int notification_action_background = 2131230864;
 			
 			// aapt resource value: 0x7F080091
-			public const int notification_icon_background = 2131230865;
+			public const int notification_bg = 2131230865;
 			
 			// aapt resource value: 0x7F080092
-			public const int notification_template_icon_bg = 2131230866;
+			public const int notification_bg_low = 2131230866;
 			
 			// aapt resource value: 0x7F080093
-			public const int notification_template_icon_low_bg = 2131230867;
+			public const int notification_bg_low_normal = 2131230867;
 			
 			// aapt resource value: 0x7F080094
-			public const int notification_tile_bg = 2131230868;
+			public const int notification_bg_low_pressed = 2131230868;
 			
 			// aapt resource value: 0x7F080095
-			public const int notify_panel_notification_icon_bg = 2131230869;
+			public const int notification_bg_normal = 2131230869;
 			
 			// aapt resource value: 0x7F080096
-			public const int tooltip_frame_dark = 2131230870;
+			public const int notification_bg_normal_pressed = 2131230870;
 			
 			// aapt resource value: 0x7F080097
-			public const int tooltip_frame_light = 2131230871;
+			public const int notification_icon_background = 2131230871;
+			
+			// aapt resource value: 0x7F080098
+			public const int notification_template_icon_bg = 2131230872;
+			
+			// aapt resource value: 0x7F080099
+			public const int notification_template_icon_low_bg = 2131230873;
+			
+			// aapt resource value: 0x7F08009A
+			public const int notification_tile_bg = 2131230874;
+			
+			// aapt resource value: 0x7F08009B
+			public const int notify_panel_notification_icon_bg = 2131230875;
+			
+			// aapt resource value: 0x7F08009C
+			public const int tooltip_frame_dark = 2131230876;
+			
+			// aapt resource value: 0x7F08009D
+			public const int tooltip_frame_light = 2131230877;
 			
 			static Drawable()
 			{
@@ -16152,14 +16170,20 @@ namespace HIIR.Droid
 		public partial class Mipmap
 		{
 			
+			// aapt resource value: 0x7F0D0002
+			public const int icon = 2131558402;
+			
+			// aapt resource value: 0x7F0D0003
+			public const int icon_round = 2131558403;
+			
 			// aapt resource value: 0x7F0D0000
-			public const int icon = 2131558400;
+			public const int ic_action_collapse = 2131558400;
 			
 			// aapt resource value: 0x7F0D0001
-			public const int icon_round = 2131558401;
+			public const int ic_action_expand = 2131558401;
 			
-			// aapt resource value: 0x7F0D0002
-			public const int launcher_foreground = 2131558402;
+			// aapt resource value: 0x7F0D0004
+			public const int launcher_foreground = 2131558404;
 			
 			static Mipmap()
 			{

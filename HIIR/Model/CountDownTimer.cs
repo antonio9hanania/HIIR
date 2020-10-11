@@ -23,6 +23,13 @@ namespace HIIR.Model
             RequestedTime = TotalTime;
             TimeLeft = RequestedTime;
         }
+        public void InitWith(TimeSpan TotalTime)
+        {
+            RequestedTime = TotalTime;
+            TimeLeft = RequestedTime;
+            isRunning = false;
+            isPause = false;
+        }
 
         public TimeSpan TimeLeft
         {

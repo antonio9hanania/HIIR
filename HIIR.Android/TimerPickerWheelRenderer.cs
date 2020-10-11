@@ -19,19 +19,23 @@ using Android.Graphics.Drawables;
 using Android.Graphics;
 using Plugin.MaterialDesignControls.Implementations;
 using Android.Views;
-
-
+using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using static Android.Widget.NumberPicker;
 
 [assembly: ExportRenderer(typeof(TimerPickerWheel), typeof(TimerPickerWheelRenderer))]
 namespace HIIR.Droid
 {
-    public class TimerPickerWheelRenderer : ViewRenderer
+    public class TimerPickerWheelRenderer : ViewRenderer , IOnTimeEventListener
     {
         private MinutesSecondsWheelPicker _minutesSecondsWheelPicker;
         private Context _context;
+        TimerPickerWheel SharedWheelPicker;
+        // public event PropertyChangedEventHandler PropertyChanged;
+
         //private CustomNumberPicker numPickerSeconds;
 
-        
+
         public TimerPickerWheelRenderer(Context context) : base(context)
         {
             _context = context;
@@ -39,57 +43,69 @@ namespace HIIR.Droid
         
 
 
-
+        
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.View> e)
         {
-
+            
             base.OnElementChanged(e);
             if (e.OldElement != null || this.Element == null)
                 return;
 
             if (Control == null)
             {
+                
+              // _minutesSecondsWheelPicker = new MinutesSecondsWheelPicker(_context);
 
-
-                _minutesSecondsWheelPicker = new MinutesSecondsWheelPicker(_context);
                 if (e.NewElement != null && e.NewElement is TimerPickerWheel timerPickerWheel)
                 {
+
+
+                    _minutesSecondsWheelPicker = new MinutesSecondsWheelPicker(_context);
+                  
+                    SharedWheelPicker = timerPickerWheel;
+                    _minutesSecondsWheelPicker.setTimeChangeEentListener(this);
+
                     _minutesSecondsWheelPicker.DividerColor = timerPickerWheel.DividerColor.ToAndroid();
                     _minutesSecondsWheelPicker.ShowDivider = timerPickerWheel.ShowDivider;
                     _minutesSecondsWheelPicker.TextSize = timerPickerWheel.TextSize;
-
+                    _minutesSecondsWheelPicker.TextColor = timerPickerWheel.AllTextColor.ToAndroid();
+                    //_minutesSecondsWheelPicker.listener
+                    //timerPickerWheel.SelectedTimeValue = _minutesSecondsWheelPicker.TimeValue;
+                    // timerPickerWheel.Time = _minutesSecondsWheelPicker.TimeValue;
+                    //timerPickerWheel.SetBinding(TimerPickerWheel.TimeProperty, new Binding(_minutesSecondsWheelPicker.TimeValue));
+                    //timerPickerWheel.SetValue(TimerPickerWheel.TimeProperty, _minutesSecondsWheelPicker.TimeValue);
+                    
                 }
                 SetNativeControl(_minutesSecondsWheelPicker);
 
             }
-        }
 
-        // **Fetching native android native from axml file --> succeed but couldn't replace the basic attributes to my own custom attributes**
-        //
-        //protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.View> e)
-        //{
-        //    base.OnElementChanged(e);
-        //    if (e.OldElement != null || this.Element == null)
-        //        return;
-        //    if (Control == null)
-        //    {
-        //        MainActivity activity = Android.App.Application.Context as MainActivity;
-        //        LayoutInflater inflater = (LayoutInflater)Context.GetSystemService(Context.LayoutInflaterService);
-        //        timePickerLayout = (Android.Widget.LinearLayout)inflater.Inflate(Resource.Layout.TimePickerLayout, null);
-        //        seconds = new NumberPicker( timePickerLayout.FindViewById<Android.Widget.NumberPicker>(Resource.Id.numpicker_seconds));
-        //        seconds.MaxValue = 59;
-        //        seconds.MinValue = 1;
-        //        minutes = new NumberPicker(timePickerLayout.FindViewById<Android.Widget.NumberPicker>(Resource.Id.numpicker_minutes));
-        //        minutes.MaxValue = 23;
-        //        minutes.MinValue = 0;
-        //        SetNativeControl(timePickerLayout);
-        //    }
-        //}
+        }
 
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+
+
+            //var stack = (TimerPickerWheel)sender;
+
+            //if (e.PropertyName == TimerPickerWheel.FirstTimeProperty.PropertyName)
+            //{
+            //    stack.FirstTime = new TimeSpan(_minutesSecondsWheelPicker.Time.Ticks);
+            //}
+
+            //else if (e.PropertyName == TimerPickerWheel.SecondTimeProperty.PropertyName)
+            //{
+            //    stack.SecondTime = new TimeSpan( _minutesSecondsWheelPicker.Time.Ticks);
+            //}   
+
+            //else if (e.PropertyName == TimerPickerWheel.TimeProperty.PropertyName)
+            //{
+            //    stack.Time = new TimeSpan( _minutesSecondsWheelPicker.Time.Ticks);
+            //}
+            
+
 
         }
 
@@ -105,21 +121,39 @@ namespace HIIR.Droid
             ((IElementController)Element).SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
         }
 
-
+        public void onTimeChanged()
+        {
+            SharedWheelPicker.TimeChanaged(_minutesSecondsWheelPicker.Time);
+        }      
     }
 
 
-    public class MinutesSecondsWheelPicker : LinearLayout
+    public interface IOnTimeEventListener
+    {
+        void onTimeChanged();
+    }
+
+    public class MinutesSecondsWheelPicker : LinearLayout, IOnValueChangeListener
     {
         //private Android.Widget.LinearLayout timePickerLayout;
         private CustomNumberPicker numPickerMinutes;
         private CustomNumberPicker numPickerSeconds;
-        private const float TITELS_TEXT_SIZE = 22;
+        private TextView minTxt;
+        private TextView secTxt;
+        private TimeSpan TimeValue = new TimeSpan();
+        private const float TITELS_TEXT_SIZE = 16;
+        private IOnTimeEventListener mListener = null;
 
-        public MinutesSecondsWheelPicker(Context context) :base(context)
+
+        public MinutesSecondsWheelPicker(Context context ) :base(context)
         {
+            
             prepareView(context);
+
+
         }
+
+
 
         private float _wheelTextsize = 50;
         public float TextSize 
@@ -164,25 +198,71 @@ namespace HIIR.Droid
             }
         }
 
+        private Android.Graphics.Color _textColor = Android.Graphics.Color.Black;
+        public Android.Graphics.Color TextColor
+        {
+            get { return _textColor; }
+            set 
+            {
+                numPickerMinutes.TextColor = value;
+                numPickerSeconds.TextColor = value;
+                minTxt.SetTextColor(value);
+                secTxt.SetTextColor(value);
+                _textColor = value;
+
+            }
+        }
+
+        //private TimeSpan _selectedTimeValue = new TimeSpan(0,0,1);
+        public TimeSpan SelectedTimeValue()
+        {
+
+            return new TimeSpan(0, numPickerMinutes.Value, numPickerSeconds.Value);
+                       
+        }
+
+        public TimeSpan Time {
+            get 
+            {
+
+                return TimeValue;
+            }
+            set
+            {
+                if(TimeValue != value)
+                {
+                    TimeValue = value;
+                    if(mListener != null)
+                        onTimeChanged();
+                }
+            }
+        }
+
+        public void setTimeChangeEentListener(IOnTimeEventListener eventListener)
+        {
+            mListener = eventListener;
+        }
+
         private void prepareView(Context _context)
         {
             this.SetGravity(GravityFlags.Center);
-            this.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+            this.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.MatchParent);
             
 
 
 
             numPickerMinutes = new CustomNumberPicker(_context);
+            numPickerMinutes.SetOnValueChangedListener(this);
             numPickerMinutes.DividerColor = Android.Graphics.Color.Transparent;
             numPickerMinutes.TextSize = TextSize;
             numPickerMinutes.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
             
-            numPickerMinutes.MaxValue = 59;
+            numPickerMinutes.MaxValue = 60;
             numPickerMinutes.MinValue = 1;
 
             this.AddView(numPickerMinutes);
 
-            TextView minTxt = new TextView(_context);
+            minTxt = new TextView(_context);
             minTxt.SetText("min", TextView.BufferType.Normal);
             minTxt.SetTextColor(new Android.Graphics.Color(Android.Graphics.Color.Black));
             minTxt.SetTextSize(Android.Util.ComplexUnitType.Sp, TITELS_TEXT_SIZE);
@@ -191,15 +271,17 @@ namespace HIIR.Droid
             this.AddView(minTxt);
 
             numPickerSeconds = new CustomNumberPicker(_context);
+            numPickerSeconds.SetOnValueChangedListener(this);
+
             numPickerSeconds.DividerColor = Android.Graphics.Color.Transparent;
             numPickerSeconds.TextSize = TextSize;
             numPickerSeconds.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-            numPickerSeconds.MaxValue = 60;
+            numPickerSeconds.MaxValue = 59;
             numPickerSeconds.MinValue = 0;
 
             this.AddView(numPickerSeconds);
 
-            TextView secTxt = new TextView(_context);
+            secTxt = new TextView(_context);
             secTxt.SetText("sec", TextView.BufferType.Normal);
             secTxt.SetTextColor(new Android.Graphics.Color(Android.Graphics.Color.Black));
             secTxt.SetTextSize(Android.Util.ComplexUnitType.Sp, TITELS_TEXT_SIZE);
@@ -207,17 +289,34 @@ namespace HIIR.Droid
 
             this.AddView(secTxt);
         }
-    }
 
-    public class CustomNumberPicker : NumberPicker
-    {
-        private const float GESTURE_THRESHOLD_DIP = 16.0f;
+        public void OnValueChange(NumberPicker picker, int oldVal, int newVal)
+        {
 
-
-        public CustomNumberPicker(Context context) : base(context)
-        {           
+            Handler handler = new Handler();
+            Action action = () =>
+            {
+                Time  = new TimeSpan(0, numPickerMinutes.Value, numPickerSeconds.Value);
+            };
+            handler.PostDelayed(action, 500);
         }
 
+        public void onTimeChanged()
+        {
+            mListener.onTimeChanged();
+        }
+    }
+
+    public class CustomNumberPicker : NumberPicker 
+    {
+        private const float GESTURE_THRESHOLD_DIP = 16.0f;
+        
+        
+        
+        public CustomNumberPicker(Context context) : base(context)
+        {
+            
+        }
 
         private Android.Graphics.Color _dividerColor = Android.Graphics.Color.Black;
 
@@ -227,6 +326,7 @@ namespace HIIR.Droid
             set
             {
                 SetDividerColor(value);
+                
             }
         }
 
@@ -237,6 +337,16 @@ namespace HIIR.Droid
             set
             {
                 SetTextSize(value);
+            }
+        }
+
+        private Android.Graphics.Color _textColor = Android.Graphics.Color.Black; // numberpicker defaultive text color
+        public Android.Graphics.Color TextColor
+        {
+            get { return _textColor; }
+            set
+            {
+                SetTextColor(value);
             }
         }
 
@@ -291,9 +401,41 @@ namespace HIIR.Droid
             catch
             {
                 // ignored
+            }            
+        }
+
+
+        private void SetTextColor(Android.Graphics.Color TextColor)
+        {
+            try
+            {                
+                int count = this.ChildCount;
+
+                for (int i = 0; i < count; i++)
+                {
+                    Android.Views.View child = this.GetChildAt(i);
+                    if (this.GetChildAt(i).GetType() == typeof(EditText))
+                        ((EditText)child).SetTextColor(TextColor);
+                }
+
+                // changing the rest of the options text
+                var numPickerType = Java.Lang.Class.FromType(typeof(NumberPicker));
+                var textColorField = numPickerType.GetDeclaredField("mSelectorWheelPaint");
+
+                textColorField.Accessible = true;
+
+                ((Paint)textColorField.Get(this)).Color = TextColor; 
+                _textColor = TextColor;
+
+
+
+            }
+            catch
+            {
+                // ignored
             }
         }
-        
+
     }
 
 }

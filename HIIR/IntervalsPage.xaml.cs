@@ -25,7 +25,9 @@ namespace HIIR
 
             InitializeComponent();
 
+            
             BindingContext  = new IntervalsPageViewModel();
+            timePickersListView.ItemsSource = (BindingContext as IntervalsPageViewModel).TimerPickersViewModel;
        //    timePicker.BindingContext = ViewModel;
 
 
@@ -34,10 +36,10 @@ namespace HIIR
         private void rightButton_Clicked(object sender, EventArgs e)
         {
 
-            ViewModel.IsVisible = false;
-            progressTime.IsVisible = true;
+           // ViewModel.IsVisible = false;
+          //  progressTime.IsVisible = true;
             //progressbar.IsEnabled = true;
-            progressbar.IsVisible = true;
+           // progressbar.IsVisible = true;
             //ViewModel.OkCommand.Execute(timePicker.Time);
             //timePicker.IsOpen = false;
 
@@ -45,7 +47,21 @@ namespace HIIR
 
         private void leftButton_Clicked(object sender, EventArgs e)
         {
+            //ViewModel.IsVisible = true;
+            //progressTime.IsVisible = false;
+            //progressbar.IsVisible = false;
 
+        }
+
+        private void TimerPickerWheel_Changed(object sender, EventArgs e)
+        {
+                ViewModel.SetTime((sender as TimerPickerWheel).TimeValue);
+        }
+
+        private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ViewModel.CurrentTimerSelectorIndex = e.ItemIndex; 
+            ViewModel.ShowOrHideListModels(e.Item as WheeltimePickerModel);
         }
     }
        
