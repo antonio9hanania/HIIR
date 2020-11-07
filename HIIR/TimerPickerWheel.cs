@@ -26,6 +26,15 @@ namespace HIIR
         public static readonly BindableProperty ShowDividerProperty =
             BindableProperty.Create(nameof(ShowDivider), typeof(bool), typeof(TimerPickerWheel));
 
+        public static readonly BindableProperty MinMinutesValueProperty =
+            BindableProperty.Create(nameof(MinMinutesValue), typeof(int?), typeof(TimerPickerWheel));
+
+
+        public static readonly BindableProperty MinSecondsValueProperty =
+            BindableProperty.Create(nameof(MinSecondsValue), typeof(int?), typeof(TimerPickerWheel));
+
+        public static readonly BindableProperty DefaulteValueProperty =
+    BindableProperty.Create(nameof(DefaulteValue), typeof(int?), typeof(TimerPickerWheel));
 
         //public static readonly BindableProperty FirstTimeProperty =
         //    BindableProperty.Create(nameof(FirstTime), typeof(TimeSpan), typeof(TimerPickerWheel), new TimeSpan(0, 1, 0), propertyChanged: (s, o, n) => { (s as TimerPickerWheel).OnTimeChanged(new EventArgs()); });
@@ -46,8 +55,39 @@ namespace HIIR
         #region Properties
 
 
+        public int? MinMinutesValue
+        {
+            get
+            {
+                return GetValue<int?>(MinMinutesValueProperty);
+            }
+            set
+            {
+                SetValue(MinMinutesValueProperty, value);
+            }
+        }
 
+        public int? MinSecondsValue {
+            get
+            {
+                return GetValue<int?>(MinSecondsValueProperty);
+            }
+            set
+            {
+                SetValue(MinSecondsValueProperty, value);
+            }
+        }
 
+        public TimeSpan? DefaulteValue {
+            get
+            {
+                return GetValue<TimeSpan?>(DefaulteValueProperty);
+            }
+            set
+            {
+                SetValue(DefaulteValueProperty, value);
+            }
+        }
 
         public float TextSize
         {

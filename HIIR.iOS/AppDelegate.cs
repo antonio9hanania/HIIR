@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using ProgressRingControl.Forms.Plugin.iOS;
 using UIKit;
 
 namespace HIIR.iOS
@@ -23,6 +24,13 @@ namespace HIIR.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            ProgressRingRenderer.Init();
+            Xamarin.FormsGoogleMaps.Init("AIzaSyAxNB86HG1M0oxI5_kAb64LkNKxrgflhCY");
+            Xamarin.FormsGoogleMapsBindings.Init();
+
+
+            Xamarin.FormsMaps.Init();
+
             Plugin.MaterialDesignControls.iOS.Renderer.Init();
 
             LoadApplication(new App());

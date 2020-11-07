@@ -7,7 +7,18 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections;
+using System.Threading;
+using Plugin.TextToSpeech;
+using Plugin.TextToSpeech.Abstractions;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
+using HIIR.Model;
 
+//using Xamarin.Forms.Maps;
+//using Xamarin.Essentials;
+
+using Xamarin.Forms.GoogleMaps;
 namespace HIIR
 {
 
@@ -16,108 +27,95 @@ namespace HIIR
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class test : ContentPage
     {
+        //private ObservableCollection<Pin> _pinCollection = new ObservableCollection<Pin>();
+        //public ObservableCollection<Pin> PinCollection 
+        //{
+        //    get => _pinCollection;
+        //    set { 
+        //        _pinCollection = value; 
+        //        OnPropertyChanged(nameof(PinCollection));
+        //    } 
+        //}
 
-        private WheeltimePickerModel _oldView;
-        private int currnetTimerIndex = 0;
 
-        public ObservableCollection<WheeltimePickerModel> ViewsModel { get; set; }
-        = new ObservableCollection<WheeltimePickerModel>();
+        ////readonly ObservableCollection<Pin> _pins;
 
+        ////public IEnumerable Pins => _pins;
 
+        //private ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
+        //public ObservableCollection<Pin> Pins
+        //{
+        //    get => _pinCollection;
+        //    set
+        //    {
+        //        _pinCollection = value;
+        //        OnPropertyChanged(nameof(Pins));
+        //    }
+        //}
 
-
-
+        public testViewModel ViewModel
+        {
+            get { return BindingContext as testViewModel; }
+            set { BindingContext = value; }
+        }
+        //public ObservableCollection<Pin> SecondaryPins { get; set; } = new ObservableCollection<Pin>();
         public test()
         {
+            //_pins = new ObservableCollection<Pin>();
+
             InitializeComponent();
-            //Views = new List<WheeltimePickerModel>();
-            ViewsModel.Add(new WheeltimePickerModel
-            {
-                Name = "Running Duration",
-                IsVisible = true,
-                InEdit = true,
-                Time = new TimeSpan(0, 1, 0)
-            });
-            ViewsModel.Add(new WheeltimePickerModel
-            {
-                Name = "Walking Duration",
-                IsVisible = false,
-                InEdit = false,
-                Time = new TimeSpan(0, 1, 0)
-            });
-            //timePickersListView.ItemsSource = ViewsModel;
-            _oldView = ViewsModel[0];
-        }
-
-        //public void ShowOrHidePoducts(WheeltimePickerModel view)
-        //{
-        //    if (_oldView == view)
-        //    {
-        //        // click twice on the same item will hide it
-        //        view.IsVisible = !view.IsVisible;
-        //        view.InEdit = !view.InEdit;
-        //        UpdateViews(view);
-        //    }
-        //    else
-        //    {
-        //        if (_oldView != null)
-        //        {
-        //            // hide previous selected item
-        //            _oldView.IsVisible = false;
-        //            _oldView.InEdit = false;
-        //            UpdateViews(_oldView);
-        //        }
-        //        // show selected item
-        //        view.IsVisible = true;
-        //        view.InEdit = true;
-        //        UpdateViews(view);
-        //    }
-
-        //    _oldView = view;
-        //}
-
-        //private void UpdateViews(WheeltimePickerModel view)
-        //{
-        //    var index = ViewsModel.IndexOf(view);
-        //    ViewsModel.Remove(view);
-        //    ViewsModel.Insert(index, view);
-        //}
-
-        //private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
-        //{
-        //    currnetTimerIndex = e.ItemIndex;
+            BindingContext = new testViewModel();
+            //bindableMap.MapPins= PinCollection;
+            //map.ItemsSource = Pins;
             
-        //    var view = e.Item as WheeltimePickerModel;
-        //    //var vm = BindingContext as MainViewModel;
-        //    ShowOrHidePoducts(view);
-
-        //}
-
-        //private void TimerPickerWheel_Changed(object sender, EventArgs e)
-        //{
-
-        //    ViewsModel[currnetTimerIndex].Time = (sender as TimerPickerWheel).TimeValue;
-        //    //if (currnetTimerIndex == 0)
-        //    //    ViewsModel[currnetTimerIndex].Time = (sender as TimerPickerWheel).FirstTime;
-        //    //if(currnetTimerIndex == 1)
-        //    //    ViewsModel[currnetTimerIndex].Time = (sender as TimerPickerWheel).SecondTime;
-
-        //}
 
 
-    }
 
-    public class WheeltimePickerModel
-    {
-        public string Name { get; set; }
-        public bool IsVisible { get; set; }
-
-        public TimeSpan Time 
-        {
-            get;
-            set;
         }
 
-        public bool InEdit { get; set; }
+        private void map_MapClicked(object sender, MapClickedEventArgs e)
+        {
+            ViewModel.MapSelection(e.Point);
+            //Pins.Add(new Pin
+            //{
+            //    Label = (string)"Starting point",
+            //    Position = e.Point
+            //});
+        }
+
+        //private void Button_Clicked(object sender, EventArgs e)
+        //{
+        //    map.ItemsSource = SecondaryPins;
+        //}
+
+        //private void Button_Clicked_1(object sender, EventArgs e)
+        //{
+        //    map.ItemsSource = Pins;
+        //}
+
+
+
+        //private void BindableMap_MapClicked(object sender, MapClickedEventArgs e)
+        //{
+
+        //    Pins.Add(new Pin
+        //    {
+        //        Label = (string)"Starting point",
+        //        Position = e.Position
+        //    }) ;
+
+        //    //    Console.WriteLine(map.Behaviors);
+        //}
+
+        //private void Button_Clicked(object sender, EventArgs e)
+        //{
+        //    map.ItemsSource = SecondaryPins;
+        //}
+
+        //private void Button_Clicked_1(object sender, EventArgs e)
+        //{
+        //    map.ItemsSource = Pins;
+        //}
+
     }
 }

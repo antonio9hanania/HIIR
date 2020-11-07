@@ -69,12 +69,19 @@ namespace HIIR.Droid
                     _minutesSecondsWheelPicker.ShowDivider = timerPickerWheel.ShowDivider;
                     _minutesSecondsWheelPicker.TextSize = timerPickerWheel.TextSize;
                     _minutesSecondsWheelPicker.TextColor = timerPickerWheel.AllTextColor.ToAndroid();
+
+                    if (timerPickerWheel.MinMinutesValue != null)
+                        _minutesSecondsWheelPicker.MinMinutesValue = timerPickerWheel.MinMinutesValue;
+                    if (timerPickerWheel.MinSecondsValue != null)
+                        _minutesSecondsWheelPicker.MinMinutesValue = timerPickerWheel.MinSecondsValue;
+                    if (timerPickerWheel.DefaulteValue != null)
+                        _minutesSecondsWheelPicker.DefaulteValue = (TimeSpan)timerPickerWheel.DefaulteValue;
                     //_minutesSecondsWheelPicker.listener
                     //timerPickerWheel.SelectedTimeValue = _minutesSecondsWheelPicker.TimeValue;
                     // timerPickerWheel.Time = _minutesSecondsWheelPicker.TimeValue;
                     //timerPickerWheel.SetBinding(TimerPickerWheel.TimeProperty, new Binding(_minutesSecondsWheelPicker.TimeValue));
                     //timerPickerWheel.SetValue(TimerPickerWheel.TimeProperty, _minutesSecondsWheelPicker.TimeValue);
-                    
+
                 }
                 SetNativeControl(_minutesSecondsWheelPicker);
 
@@ -214,6 +221,10 @@ namespace HIIR.Droid
         }
 
         //private TimeSpan _selectedTimeValue = new TimeSpan(0,0,1);
+
+        public int? MinMinutesValue { get; set; }
+        public int? MinSecondsValue { get; set; }
+        public TimeSpan? DefaulteValue { get; set; }
         public TimeSpan SelectedTimeValue()
         {
 
@@ -257,8 +268,20 @@ namespace HIIR.Droid
             numPickerMinutes.TextSize = TextSize;
             numPickerMinutes.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
             
+            if (MinMinutesValue == null)
+            {
+                MinMinutesValue = 1;
+                numPickerMinutes.MinValue = (int)MinMinutesValue;
+
+            }
+            else
+            {
+                numPickerMinutes.MinValue = (int)MinMinutesValue;
+            }
             numPickerMinutes.MaxValue = 60;
-            numPickerMinutes.MinValue = 1;
+
+            if(DefaulteValue!= null)
+                numPickerMinutes.Value = ((TimeSpan)DefaulteValue).Minutes; //check
 
             this.AddView(numPickerMinutes);
 
@@ -276,9 +299,19 @@ namespace HIIR.Droid
             numPickerSeconds.DividerColor = Android.Graphics.Color.Transparent;
             numPickerSeconds.TextSize = TextSize;
             numPickerSeconds.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-            numPickerSeconds.MaxValue = 59;
-            numPickerSeconds.MinValue = 0;
+            if(MinSecondsValue == null)
+            {
+                MinSecondsValue = 0;
+                numPickerSeconds.MinValue = (int)MinSecondsValue;
 
+            }
+            else
+            {
+                numPickerSeconds.MinValue = (int)MinSecondsValue;
+            }
+            numPickerSeconds.MaxValue = 59;
+            if (DefaulteValue != null)
+                numPickerSeconds.Value = ((TimeSpan)DefaulteValue).Seconds; ///check
             this.AddView(numPickerSeconds);
 
             secTxt = new TextView(_context);

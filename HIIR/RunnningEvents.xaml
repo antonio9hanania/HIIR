@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:map="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:googleMaps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings"
+             xmlns:local="clr-namespace:HIIR;assembly=HIIR"
+             x:Class="HIIR.RunnningEvents"
+             x:Name="RunningEventsPage"
+             BackgroundColor="Black">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BoolToggleConverter x:Key="boolToggle"/>
+            <local:ListActionIconConverter x:Key="exapandOrCollapseIcon"/>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <StackLayout >
+
+            <Grid VerticalOptions="FillAndExpand" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    
+                    <RowDefinition Height="2.5*   " />
+                </Grid.RowDefinitions>
+
+
+
+            <!--<maps:Map x:Name="map" Grid.Row="0" MapType="Street" HasZoomEnabled="True" HasScrollEnabled="True" >
+            </maps:Map>-->
+            <googleMaps:Map  x:Name="map" Grid.Row="0" MapType="Street" HasZoomEnabled="True" HasScrollEnabled="True" SelectedPin="{Binding FocusedPin}" MapClicked="map_MapClicked" ItemsSource="{Binding CurrMapPins}"  PinClicked="map_PinClicked">
+                <googleMaps:Map.ItemTemplate>
+                    <DataTemplate>
+                        <googleMaps:Pin 
+                        Position="{Binding Pin.Position}" Label="{Binding Pin.Label}"/>
+                    </DataTemplate>
+                </googleMaps:Map.ItemTemplate>
+            </googleMaps:Map>
+
+
+                <StackLayout  Grid.Row="1" VerticalOptions="FillAndExpand">
+                <Button x:Name="newEventButton" Text="New&#x0a;Event" TextTransform="None"  HorizontalOptions="End" Command="{Binding NewEventButtonClickedCommand}" 
+                        IsEnabled="{Binding IsNewEvent, Converter={StaticResource boolToggle}}"/>
+
+                    
+                    <StackLayout VerticalOptions="StartAndExpand" >
+                    <ListView ItemTapped="ListView_ItemTapped" ItemsSource="{Binding CurrMapPins}" HasUnevenRows="True" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell >
+                                    <StackLayout IsVisible="{Binding IsValid}"  Margin="5, 5, 5, 5">
+                                        <BoxView HeightRequest="1" Color="Gray"/>
+
+                                            <StackLayout Orientation="Horizontal" >
+                                                <Label Text="{Binding Publisher}" TextColor="White" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                                                <Image Source="{Binding IsExpanded, Converter={StaticResource  exapandOrCollapseIcon} }" Aspect="AspectFit"  HorizontalOptions="EndAndExpand"/> 
+                                            </StackLayout>
+                                            
+                                            <StackLayout IsVisible="{Binding IsExpanded}"  Orientation="Vertical" VerticalOptions="FillAndExpand" >
+                                                <Label Text="Some Notes: " TextColor="White" FontAttributes="Bold" TextDecorations="Underline" HorizontalTextAlignment="Center"/>
+                                                <Label Text="{Binding Note}" HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="White"/>
+                                                <Label Text="Address" HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="White"/>
+                                            </StackLayout>
+                                        <BoxView HeightRequest="1" Color="Gray"/>
+
+
+                                    </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+
+            </StackLayout>
+
+            <AbsoluteLayout Grid.Row="1" Margin="20, 10, 20 , 10" HorizontalOptions="Center" IsVisible="{Binding IsNewEvent}">
+                <Frame Padding="1, 1, 1, 1"  BorderColor="#343435" HasShadow="True">
+                    <Frame HasShadow="True" BackgroundColor="AliceBlue">
+                        <StackLayout>
+                            <Entry x:Name="newPositionEntry" Placeholder="Select starting point in map" IsEnabled="False" Text="{Binding SelectedPositionCoords}"/>
+                            <Editor Placeholder="Leave a comment.." Keyboard="Text" Text="{Binding NewEventComment}"/>
+                            <Button Text="Save"  IsEnabled="{Binding IsNewEventFormFiiled}" HorizontalOptions="Center" BackgroundColor="Blue" Command="{Binding NewEventSavedButtonClickedCommand} "/>
+                        </StackLayout>
+                        
+                    </Frame>
+                </Frame>
+
+
+            </AbsoluteLayout>
+        </Grid>
+      </StackLayout>
+    
+</ContentPage>

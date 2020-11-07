@@ -94,14 +94,14 @@ namespace HIIR.Model
         {
             int Milliseconds;
 
-            if (RequestedTime.Hours >= 1 || RequestedTime.Minutes >= 1)
-                Milliseconds = 500;
-            else if (RequestedTime.Seconds >= 10)
-                Milliseconds = 250;
-            else
-                Milliseconds = 125;
-            return Milliseconds;
-
+            //if (RequestedTime.Hours >= 1 || RequestedTime.Minutes >= 1)
+            //    Milliseconds = 500;
+            //else if (RequestedTime.Seconds >= 10)
+            //    Milliseconds = 250;
+            //else
+            //    Milliseconds = 125;
+            //return Milliseconds;
+            return 1000;
         }
     }
 }

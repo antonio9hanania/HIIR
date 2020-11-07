@@ -1,11 +1,6 @@
-﻿using HIIR.ViewModel;
+﻿using HIIR.Model;
+using HIIR.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,7 +21,7 @@ namespace HIIR
             InitializeComponent();
 
             
-            BindingContext  = new IntervalsPageViewModel();
+            BindingContext  = new IntervalsPageViewModel(new Tts(), new GeolocationService());
             timePickersListView.ItemsSource = (BindingContext as IntervalsPageViewModel).TimerPickersViewModel;
        //    timePicker.BindingContext = ViewModel;
 
@@ -55,13 +50,14 @@ namespace HIIR
 
         private void TimerPickerWheel_Changed(object sender, EventArgs e)
         {
+            
                 ViewModel.SetTime((sender as TimerPickerWheel).TimeValue);
         }
 
         private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
             ViewModel.CurrentTimerSelectorIndex = e.ItemIndex; 
-            ViewModel.ShowOrHideListModels(e.Item as WheeltimePickerModel);
+            ViewModel.ShowOrHideListModels(e.Item as WheelTimerPickerViewModel);
         }
     }
        

@@ -1,128 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms"
              xmlns:local="clr-namespace:HIIR;assembly=HIIR"
              xmlns:material="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
-             x:Class="HIIR.test" BackgroundColor="Black">
-
-
-    <StackLayout>
-
-        <!--<ListView 
-              HasUnevenRows="True"
-              x:Name="timePickersListView">
-            <ListView.ItemTemplate>
+             xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings"
+             xmlns:googleMaps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+           xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:progressring="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+             
+             x:Class="HIIR.test" 
+             x:Name="page">
+    <Grid>
+        <googleMaps:Map x:Name="map"  MapType="Street" MapClicked="map_MapClicked"  Grid.Row="0" ItemsSource="{Binding Pins}" >
+            <googleMaps:Map.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <StackLayout >
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding .Name}"
-                               TextColor="Navy" 
-                               FontSize="30"  HorizontalTextAlignment="Start" HorizontalOptions="StartAndExpand"/>
-                                
-                                <Label HorizontalOptions="End" Text="Expand" HorizontalTextAlignment="Start" />
-                            </StackLayout>
-
-
-                        </StackLayout>
-                    </ViewCell>
+                    <googleMaps:Pin
+                        Position="{Binding Position}" Label="{Binding Label}"/>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
-        <StackLayout >
-            <Frame Padding="0,0,4,4" Margin="5,5,5,0"  CornerRadius="2">
-                <Frame.BackgroundColor>
-                    <Color x:FactoryMethod="FromRgba">
-                        <x:Arguments>
-                            <x:Double>1</x:Double>
-                            <x:Double>1</x:Double>
-                            <x:Double>1</x:Double>
-                            <x:Double>0.5</x:Double>
-                        </x:Arguments>
-                    </Color>
-                </Frame.BackgroundColor>
+            </googleMaps:Map.ItemTemplate>
+        </googleMaps:Map>
+        <Button Text="New Event" Command="{Binding  EventButtonClickedCommand}" Grid.Row="1"/>
+        <Button Text="Return" Command="{Binding ReturnButtonclickedCommand}" Grid.Row="2"/>
 
-                <Frame 
-       HasShadow="True"
-       BorderColor="Black" >
-                    <Frame.Background>
-                        <RadialGradientBrush Center="0.1,0.1"
-                             Radius="0.5">
-                            <GradientStop Color="Black"
-                          Offset="0.1"/>
-                            <GradientStop Color="DimGray"
-                          Offset="1.0"/>
-                        </RadialGradientBrush>
-                    </Frame.Background>
-                    <StackLayout  Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
-                        <Label Text="Walking Duration"
-                               TextColor="White" 
-                               FontSize="25"  HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                        <Image Source="ic_action_expand.png" Aspect="AspectFit" />
-                    </StackLayout>
-                </Frame>
-            </Frame>
-        </StackLayout>
 
-        <StackLayout >
-            <Frame Padding="0.1,0.1,4,4" Margin="5,5,5,0" BorderColor="WhiteSmoke" CornerRadius="10">
-                <Frame.BackgroundColor>
-                    <Color x:FactoryMethod="FromRgba">
-                        <x:Arguments>
-                            <x:Double>1</x:Double>
-                            <x:Double>1</x:Double>
-                            <x:Double>1</x:Double>
-                            <x:Double>0.5</x:Double>
-                        </x:Arguments>
-                    </Color>
-                </Frame.BackgroundColor>
 
-                <Frame 
-       HasShadow="True"
-       BorderColor="Black" >
-                    <Frame.Background>
-                        <RadialGradientBrush Center="0.1,0.1"
-                             Radius="0.5">
-                            <GradientStop Color="Black"
-                          Offset="0.1"/>
-                            <GradientStop Color="DimGray"
-                          Offset="1.0"/>
-                        </RadialGradientBrush>
-                    </Frame.Background>
-                    <StackLayout  Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
-                        <Label Text="Walking Duration"
-                               TextColor="White" 
-                               FontSize="25"  HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                        <Image Source="ic_action_expand.png" Aspect="AspectFit" />
-                    </StackLayout>
-                </Frame>
-            </Frame>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Walking Duration"
-                               TextColor="White" 
-                               FontSize="25"  HorizontalTextAlignment="Start" HorizontalOptions="StartAndExpand"/>
-
-            <Image Source="ic_action_collapse.png" Aspect="Fill" />
-
-            <!--<Label HorizontalOptions="End" Text="Expand"  />-->
-        </StackLayout>
-    </StackLayout>
-
-    <!--<StackLayout >
-        <ListView ItemsSource="{Binding Views}">
-            <ListView.ItemTemplate>
+        <!--<maps:Map x:Name="map"  MapType="Street" MapClicked="BindableMap_MapClicked" Grid.Row="0" >
+            <maps:Map.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <Label Text="{Binding Name}"/>
-                    </ViewCell>
+                    <maps:Pin
+                        Position="{Binding Position}" Label="{Binding Label}"/>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>-->
+            </maps:Map.ItemTemplate>
+        </maps:Map>
+        <Button Text="Clear" Clicked="Button_Clicked" Grid.Row="1"/>
+        <Button Text="Return" Clicked="Button_Clicked_1" Grid.Row="2"/>-->
 
-<!--<StackLayout>
-        <local:TimerPickerWheel TextSize="40" ShowDivider="False"   AllTextColor="White"/>
-    </StackLayout>-->
+    </Grid>
+
 </ContentPage>

@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:progressring="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              mc:Ignorable="d"
              xmlns:local="clr-namespace:HIIR;assembly=HIIR"
-             xmlns:timepicker="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
-x:Name="page" BackgroundColor="Black"
+             xmlns:forms="clr-namespace:Xamarin.RangeSlider.Forms;assembly=Xamarin.RangeSlider.Forms"
+             
+x:Name="page" BackgroundColor="#343435"
              x:Class="HIIR.IntervalsPage">
 
     <ContentPage.Resources>
@@ -15,32 +16,12 @@ x:Name="page" BackgroundColor="Black"
             <local:ListActionIconConverter x:Key="exapandOrCollapseIcon"/>
             <local:ListModeIconConverter x:Key="walkingOrRunningIcon"/>
             <local:BoolToggleConverter x:Key="boolToggle"/>
+            <local:IsRunningConverter x:Key="isRunningMode"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <AbsoluteLayout>
 
-        <!--<StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" >
-            <Grid AbsoluteLayout.LayoutBounds="0,0,1,0.5" AbsoluteLayout.LayoutFlags="All">
-                <Label  Grid.Column="0" Text="Running duration" HorizontalTextAlignment="Center" FontSize="20" TextColor="White" TextDecorations="Underline"/>
-                <Label  Grid.Column="1" Text="Walking duration" HorizontalTextAlignment="Center"  FontSize="20" TextColor="White" TextDecorations="Underline" />
-            </Grid>
-
-            <StackLayout  Orientation="Horizontal">
-                -->
-        <!--<Label Text="Set running mode duration &#10;" HorizontalTextAlignment="Center" FontSize="30" TextColor="White"/>-->
-        <!--<local:TimerPickerWheel TextSize="40" ShowDivider="False"  SelectedTimeValue="{Binding Time, Mode=TwoWay}"  AllTextColor="White"/>-->
-        <!--
-                <BoxView MinimumWidthRequest="1"  WidthRequest="0.5" HorizontalOptions="CenterAndExpand"  Color="White" />
-                -->
-        <!--<Label Text="Set walking mode duration &#10;" HorizontalTextAlignment="Center" FontSize="30" TextColor="White"/>-->
-        <!--
-                <local:TimerPickerWheel TextSize="40" ShowDivider="False"    AllTextColor="White"/>
-
-            </StackLayout>
-
-        </StackLayout>-->
-        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsActivated, Converter={StaticResource boolToggle}}" >
+    <StackLayout>
+        <StackLayout IsVisible="{Binding IsActivated, Converter={StaticResource boolToggle}}"    >
             <ListView 
               HasUnevenRows="True"
               ItemTapped="ListView_OnItemTapped" x:Name="timePickersListView">
@@ -48,42 +29,28 @@ x:Name="page" BackgroundColor="Black"
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout  >
-
-                                <!--<Label Text="{Binding .Name}"
-                               TextColor="White" HorizontalOptions="Fill"
-                               FontSize="15"   HorizontalTextAlignment="Start"/>
-                                <StackLayout IsVisible="{Binding IsVisible}"
-                                     Orientation="Horizontal" HorizontalOptions="Center">
-                                    <local:TimerPickerWheel  Changed="TimerPickerWheel_Changed"  TextSize="50" ShowDivider="False" AllTextColor="White"/>
-
-                                </StackLayout>-->
-
-
-
-
-                                <Frame Padding="1,1,1,1" Margin="5,5,5,5"   BorderColor="#343435" HasShadow="True">
-
-
+                                <Frame Padding="3,3,3,3" Margin="5, 5, 5, 5"   BorderColor="#343435" HasShadow="True">
                                     <Frame HasShadow="True" BackgroundColor="Black">
-                                        <!--<Frame.Background>
-                                            <RadialGradientBrush Center="0.1,0.1" Radius="0.5">
-                                                <GradientStop Color="Black" Offset="0.1"/>
-                                                <GradientStop Color="DimGray" Offset="1.0"/>
-                                            </RadialGradientBrush>
-                                        </Frame.Background>-->
                                         <StackLayout>
                                             <StackLayout  Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
-                                                <Image Source="{Binding .Name, Converter={StaticResource walkingOrRunningIcon}}"  HorizontalOptions="Start"/>
-                                                <Label Text="{Binding .Name}" TextColor="White" FontSize="25"  HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                                <Image Source="{Binding Name, Converter={StaticResource walkingOrRunningIcon}}"  HorizontalOptions="Start"/>
+                                                <Label Text="{Binding Name}" TextColor="White" FontSize="25"  HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
                                                 <Image Source="{Binding IsVisible, Converter={StaticResource  exapandOrCollapseIcon} }" Aspect="AspectFit" />
                                             </StackLayout>
-                                            <StackLayout IsVisible="{Binding IsVisible}" Orientation="Horizontal" HorizontalOptions="Center">
-                                                <local:TimerPickerWheel  Changed="TimerPickerWheel_Changed"  TextSize="50" ShowDivider="False" AllTextColor="White"/>
+                                            <StackLayout IsVisible="{Binding IsVisible}"  HorizontalOptions="Center">
+                                                <local:TimerPickerWheel  Changed="TimerPickerWheel_Changed"  TextSize="50" ShowDivider="False" AllTextColor="White" />
+                                                <!--<StackLayout IsVisible="{Binding Name, Converter={StaticResource isRunningMode}}">
+                                                    --><!--<Slider ThumbColor="White"   Value="3" Minimum="0" Maximum="5" />--><!--
+                                                    <forms:RangeSlider x:Name="detectionLvl" TextColor="White" ActiveColor="Black"  MinimumValue="0" MaximumValue="5" LowerValue="0" UpperValue="5" StepValue="0" StepValueContinuously="False" VerticalOptions="Center" TextSize="15" />
+                                                    <Label TextColor="White" Text="{Binding Source={x:Reference detectionLvl},Path=Value, StringFormat='Acceptble {0:#,#.} km/h decrease' }"  HorizontalTextAlignment="Center"/>
+
+                                                </StackLayout>-->
+
                                             </StackLayout>
+
                                         </StackLayout>
                                     </Frame>
                                 </Frame>
-
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -91,31 +58,45 @@ x:Name="page" BackgroundColor="Black"
             </ListView>
         </StackLayout>
 
-        <!--<StackLayout AbsoluteLayout.LayoutBounds="0,0,1,0.5" AbsoluteLayout.LayoutFlags="All">
-            <Label Text="Set running mode duration &#10;" HorizontalTextAlignment="Center" FontSize="30" TextColor="White"/>
 
-            <local:TimerPickerWheel x:Name="timePicker" TextSize="50" ShowDivider="False"  SelectedTimeValue="{Binding Time, Mode=TwoWay}" WidthRequest="300" AllTextColor="White"/>
+        <Grid VerticalOptions="FillAndExpand" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <ScrollView Grid.Row="0" IsVisible="{Binding IsActivated}" >
 
-        </StackLayout>-->
-        <AbsoluteLayout  AbsoluteLayout.LayoutBounds="1, 1, 1, 1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsActivated}" >
-            <Label Text="{Binding UserExercizeMode}" TextColor="White" FontSize="33" TextDecorations="Underline" HorizontalOptions="CenterAndExpand" AbsoluteLayout.LayoutBounds="0.5, 0, 1, 0.1" AbsoluteLayout.LayoutFlags="All"/>
-                <Button HorizontalOptions="End"  Text="Edit" Command="{Binding EditButtonClickedCommand}" AbsoluteLayout.LayoutBounds="1, 0, 0.2, 0.07" AbsoluteLayout.LayoutFlags="All"/>
-     
-            <progressring:ProgressRing  x:Name="progressbar" RingThickness="10" ProgressColor="Orange" RingBaseColor="DarkGray"  AnimationLength="1000" AnimatedProgress="{Binding ProgressPracentage, Mode=TwoWay}" AbsoluteLayout.LayoutBounds="0,0.2,1,0.45" AbsoluteLayout.LayoutFlags="All"/>
-            <StackLayout AbsoluteLayout.LayoutBounds="0,0.6,1,0.5" AbsoluteLayout.LayoutFlags="All">
-
-                <Label HorizontalTextAlignment="Center"  TextColor="White" Text="{Binding CountdownTimer, StringFormat='{}{0:mm\\:ss}'}" FontSize="30"  x:Name="progressTime" />
-                <Label Text="{Binding RoundsCounter, StringFormat='Reound {0}'}" TextColor="White" HorizontalTextAlignment="Center"/>
-            </StackLayout >
-        </AbsoluteLayout>
+                <StackLayout IsVisible="{Binding IsActivated}" Spacing="40" >
+                    <AbsoluteLayout HorizontalOptions="Fill" HeightRequest="60" >
+                        <StackLayout Spacing="0"  HorizontalOptions="End" AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All" HeightRequest="40" WidthRequest="40">
+                            <ImageButton  BackgroundColor="Transparent" Source="ic_reselect_timer_white.png" Aspect="AspectFit"  Command="{Binding EditButtonClickedCommand}" />
+                            <Label  Text="Edit" TextColor="White" HorizontalOptions="Center" VerticalOptions="Start"/>
+                        </StackLayout>
+                        <Label Text="{Binding UserExercizeMode}" TextColor="White" FontSize="40" TextDecorations="Underline" VerticalOptions="Start" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+               AbsoluteLayout.LayoutFlags="All"/>
+                    </AbsoluteLayout>
 
 
-        <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.7,0.7,1, 80" AbsoluteLayout.LayoutFlags="WidthProportional,PositionProportional">
-            <Button   BorderRadius="40" HeightRequest="80" WidthRequest="80"  HorizontalOptions="StartAndExpand" Text="Cancel" x:Name="leftButton"  BackgroundColor="#343435"  TextColor="White" Command="{Binding LeftButtonClickedCommand}" Clicked="leftButton_Clicked"/>
-            <Button   Clicked="rightButton_Clicked" BorderRadius="40" HeightRequest="80" WidthRequest="80" HorizontalOptions="End" Text="{Binding ButtomModeText}" x:Name="rightButton" TextColor="{Binding ButtomModeColor}"  BackgroundColor="#343435"  Command="{Binding RightButtonClickedCommand}"/>
+                    <Grid WidthRequest="250" HeightRequest="250" HorizontalOptions="Center">
+                        <control:ProgressRing  x:Name="progressbar" RingThickness="10" ProgressColor="Orange" RingBaseColor="DarkGray"  AnimationLength="{Binding ProgressAnimationLength}"   AnimatedProgress="{Binding ProgressPracentage, Mode=TwoWay}" />
 
-        </StackLayout>
-    </AbsoluteLayout>
+                        <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label HorizontalTextAlignment="Center"  TextColor="White" Text="{Binding CountdownTimer, StringFormat='{}{0:mm\\:ss}'}" FontSize="30"  x:Name="progressTime" />
+                            <Label Text="{Binding Speed, StringFormat='{0} Km/h'}" HorizontalTextAlignment="Center" FontSize="25" TextColor="Orange"/>
+                            <Label Text="{Binding RoundsCounter, StringFormat='Reound {0}'}" TextColor="White" HorizontalTextAlignment="Center"/>
+                        </StackLayout >
+                    </Grid>
+
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" Padding="10" Grid.Row="1" BackgroundColor="Black">
+                <Button   BorderRadius="40" HeightRequest="80" WidthRequest="80"  HorizontalOptions="StartAndExpand" Text="Cancel" x:Name="leftButton"  BackgroundColor="#343435"  TextColor="White" Command="{Binding LeftButtonClickedCommand}" Clicked="leftButton_Clicked"/>
+                <Button   Clicked="rightButton_Clicked" BorderRadius="40" HeightRequest="80" WidthRequest="80" HorizontalOptions="End" Text="{Binding ButtomModeText}" x:Name="rightButton" TextColor="{Binding ButtomModeColor}"  BackgroundColor="#343435"  Command="{Binding RightButtonClickedCommand}"/>
+            </StackLayout>
+        </Grid>
+
+    </StackLayout>
 
 
 </ContentPage>
