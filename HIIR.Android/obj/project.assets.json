@@ -5771,11 +5771,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR.Android\\HIIR.Android.csproj",
+      "projectUniqueName": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR.Android\\HIIR.Android.csproj",
       "projectName": "HIIR.Android",
-      "projectPath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR.Android\\HIIR.Android.csproj",
+      "projectPath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR.Android\\HIIR.Android.csproj",
       "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR.Android\\obj\\",
+      "outputPath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -5796,8 +5796,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-            "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj": {
-              "projectPath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj"
+            "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj": {
+              "projectPath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj"
             }
           }
         }

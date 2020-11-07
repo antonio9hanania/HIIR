@@ -11,7 +11,7 @@
              x:Class="HIIR.test" 
              x:Name="page">
     <Grid>
-        <googleMaps:Map x:Name="map"  MapType="Street" MapClicked="map_MapClicked"  Grid.Row="0" ItemsSource="{Binding Pins}" >
+        <!--<googleMaps:Map x:Name="map"  MapType="Street" MapClicked="map_MapClicked"  Grid.Row="0" ItemsSource="{Binding Pins}" >
             <googleMaps:Map.ItemTemplate>
                 <DataTemplate>
                     <googleMaps:Pin
@@ -20,7 +20,7 @@
             </googleMaps:Map.ItemTemplate>
         </googleMaps:Map>
         <Button Text="New Event" Command="{Binding  EventButtonClickedCommand}" Grid.Row="1"/>
-        <Button Text="Return" Command="{Binding ReturnButtonclickedCommand}" Grid.Row="2"/>
+        <Button Text="Return" Command="{Binding ReturnButtonclickedCommand}" Grid.Row="2"/>-->
 
 
 

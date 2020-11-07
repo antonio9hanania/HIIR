@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+ywT9akD7W2Zuvx+H2lUJPKKYSmrd0bNcZOHFmgTnCDsSTK7MRuSpo9pO3DH2UHneQuY/TpCT+J9todGntKZdA==",
+  "dgSpecHash": "f6lgaRSuTKgKw2nG2w+J17OvXH65vPTKZVvStzHDKPCXCs6eSWEmBvrHIq7uXGGVSw0HGvIeiUT4qE0o12WAQw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR.Android\\HIIR.Android.csproj",
+  "projectFilePath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR.Android\\HIIR.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\anton\\.nuget\\packages\\geocoordinate.netcore\\1.0.0.1\\geocoordinate.netcore.1.0.0.1.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

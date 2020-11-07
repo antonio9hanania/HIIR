@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hXrE00b6WvKSOpxAfgoUpdT677uxE3FWzyDC8x1vIyXPHe8CF67BjA0fG9ltYuvj43DC3I6ICR1+En5E0wjedg==",
+  "dgSpecHash": "GckCTQAby/b+FRu2AuV3rFkMrPwQfo0Ibnw6HovpF7G/L5FvcGFyyJCi1NKP4Lb5JhyqLR4R2Rke0FWCsaEwSg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj",
+  "projectFilePath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\anton\\.nuget\\packages\\geocoordinate.netcore\\1.0.0.1\\geocoordinate.netcore.1.0.0.1.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj": {}
+    "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj": {}
   },
   "projects": {
-    "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj": {
+    "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj",
+        "projectUniqueName": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj",
         "projectName": "HIIR",
-        "projectPath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\HIIR.csproj",
+        "projectPath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\HIIR.csproj",
         "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\anton\\source\\repos\\HIIR\\HIIR\\obj\\",
+        "outputPath": "C:\\Users\\anton\\OneDrive\\Documents\\GitHub\\HIIR\\HIIR\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
